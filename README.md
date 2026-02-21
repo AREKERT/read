@@ -9,9 +9,9 @@
 - iOS / iPadOS 17 - 26
 
 ## 群：323283713 tf测试
+<img src="img/IMG_4888.jpeg" width="270" />
 
 ## 截图
-
 <table>
 	<tr>
 		<td><img src="img/1.png" width="270" /></td>
