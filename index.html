@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>栖读 — iOS 阅读客户端</title>
+  <meta name="description" content="栖读（QiReader）是一款运行在 iOS / iPadOS / macOS 上的阅读客户端，采用 iOS 26 风格 UI 设计，支持导入第三方书源与规则配置，兼容阅读 3.0 书源规则。" />
+  <meta name="keywords" content="栖读, QiReader, iOS阅读, 书源, 阅读器, iPad阅读, 阅读3.0, Mac Catalyst, 书源导入" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://arekert.github.io/read/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://arekert.github.io/read/" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:site_name" content="栖读 QiReader" />
+  <meta property="og:title" content="栖读 — iOS 阅读客户端 | 兼容阅读 3.0 书源" />
+  <meta property="og:description" content="采用 iOS 26 风格 UI 设计的阅读客户端，支持导入第三方书源/规则配置，兼容阅读 3.0 书源规则。支持 iPhone、iPad 和 macOS。" />
+  <meta property="og:image" content="https://arekert.github.io/read/img/AppIcon.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="栖读 — iOS 阅读客户端" />
+  <meta name="twitter:description" content="采用 iOS 26 风格 UI 设计的阅读客户端，支持导入第三方书源/规则配置，兼容阅读 3.0 书源规则。" />
+  <meta name="twitter:image" content="https://arekert.github.io/read/img/AppIcon.png" />
+  <link rel="icon" href="img/AppIcon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="img/AppIcon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- JSON-LD 结构化数据 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "栖读 QiReader",
+    "description": "栖读（QiReader）是一款运行在 iOS / iPadOS / macOS 上的阅读客户端，采用 iOS 26 风格 UI 设计，支持导入第三方书源与规则配置，兼容阅读 3.0 书源规则。",
+    "operatingSystem": "iOS, iPadOS, macOS",
+    "applicationCategory": "BooksApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "CNY"
+    },
+    "image": "https://arekert.github.io/read/img/AppIcon.png",
+    "url": "https://arekert.github.io/read/"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "部分书源无法使用？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "受规则复杂度、第三方站点变更与网络环境影响，实际可用性以测试结果为准。解析/兼容层为纯 Swift 实现，部分 JS 函数兼容仍有缺陷，可能导致个别规则解析异常。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "批量测试功能异常？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "批量测试功能尚未完善，可能出现卡死或无响应，建议暂时不要使用。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "在线 TTS 是否可用？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "在线 TTS 功能尚未完善，可能不可用。"
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "支持哪些系统版本？",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "目前主要在 iOS 26 环境下测试，iOS / iPadOS 17–26 均可运行，但其他版本可能存在兼容性问题。macOS 通过 Mac Catalyst 运行。"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="nav-brand">
+        <img src="img/AppIcon.png" alt="栖读" class="nav-icon" />
+        <span>栖读</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">功能</a></li>
+        <li><a href="#screenshots">截图</a></li>
+        <li><a href="#roadmap">路线图</a></li>
+        <li><a href="#faq">常见问题</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+  <!-- Hero 区域 -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <img src="img/AppIcon.png" alt="栖读 QiReader App 图标" class="hero-icon" width="80" height="80" />
+        <h1>栖读 — iOS 阅读客户端</h1>
+        <p class="hero-tagline">你的 iOS 阅读伴侣，兼容阅读 3.0 书源</p>
+        <p class="hero-desc">
+          采用 <strong>iOS 26 风格 UI</strong> 设计的阅读客户端，支持导入并使用第三方书源/规则配置，
+          尽力兼容"阅读 3.0"书源规则。
+        </p>
+        <div class="hero-actions">
+          <a href="#community" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            加入测试
+          </a>
+          <a href="https://github.com/AREKERT/read" class="btn btn-secondary" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+        </div>
+        <p class="hero-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          本应用不提供任何内容资源，书籍内容与书源/规则均由使用者自行导入。
+        </p>
+      </div>
+      <div class="hero-visual">
+        <div class="phone-frame">
+          <img src="img/1.png" alt="栖读 QiReader 书架界面截图" width="280" height="606" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 功能特性 -->
+  <section id="features" class="features">
+    <div class="container">
+      <h2 class="section-title">功能特性</h2>
+      <p class="section-subtitle">为你打造的沉浸式阅读体验</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📖</div>
+          <h3>书源兼容</h3>
+          <p>尽力兼容"阅读 3.0"书源规则，可导入第三方书源配置，解锁海量阅读资源。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>iOS 26 设计</h3>
+          <p>采用最新 iOS 26 风格 UI，界面流畅优雅，阅读体验自然舒适。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <h3>多平台运行</h3>
+          <p>支持 iPhone、iPad，并通过 Mac Catalyst 可在 macOS 上原生运行。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔧</div>
+          <h3>规则配置</h3>
+          <p>支持导入替换规则、书源订阅等丰富配置，灵活定制你的阅读环境。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🌙</div>
+          <h3>舒适阅读</h3>
+          <p>支持自定义排版、配色，提供舒适的沉浸式阅读体验。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>原生性能</h3>
+          <p>纯 Swift 实现，充分利用 Apple 平台原生能力，流畅高效。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 测试交流 -->
+  <section id="community" class="community">
+    <div class="container community-inner">
+      <div class="community-text">
+        <h2>加入测试</h2>
+        <p>欢迎加入 QQ 群参与 TestFlight 测试，反馈问题与建议。</p>
+        <p class="qq-number">QQ 群：<strong>323283713</strong></p>
+      </div>
+      <div class="community-qr">
+        <img src="img/IMG_4888.jpeg" alt="QQ 群二维码" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 截图展示 -->
+  <section id="screenshots" class="screenshots">
+    <div class="container">
+      <h2 class="section-title">应用截图</h2>
+      <p class="section-subtitle">iPhone / iPad</p>
+      <div class="screenshot-gallery">
+        <div class="screenshot-item">
+          <img src="img/1.png" alt="栖读 App 书架界面 - 管理你的阅读书籍" loading="lazy" width="340" height="736" />
+        </div>
+        <div class="screenshot-item">
+          <img src="img/2.png" alt="栖读 App 搜索界面 - 多书源聚合搜索" loading="lazy" width="340" height="736" />
+        </div>
+        <div class="screenshot-item">
+          <img src="img/3.png" alt="栖读 App 阅读界面 - 沉浸式阅读体验" loading="lazy" width="340" height="736" />
+        </div>
+        <div class="screenshot-item">
+          <img src="img/4.png" alt="栖读 App 书源管理 - 导入第三方书源规则" loading="lazy" width="340" height="736" />
+        </div>
+        <div class="screenshot-item">
+          <img src="img/7.png" alt="栖读 App 设置界面 - 自定义阅读偏好" loading="lazy" width="340" height="736" />
+        </div>
+        <div class="screenshot-item">
+          <img src="img/9.png" alt="栖读 App 书籍详情 - 章节目录浏览" loading="lazy" width="340" height="736" />
+        </div>
+      </div>
+      <p class="section-subtitle" style="margin-top: 3rem;">macOS（Mac Catalyst）</p>
+      <div class="screenshot-mac">
+        <img src="img/mac.png" alt="栖读 QiReader macOS Mac Catalyst 桌面端截图" loading="lazy" width="1200" height="750" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 系统支持 -->
+  <section class="system-req">
+    <div class="container">
+      <h2 class="section-title">系统支持</h2>
+      <div class="system-cards">
+        <div class="system-card">
+          <div class="system-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>iOS / iPadOS</h3>
+          <p>17 – 26</p>
+        </div>
+        <div class="system-card">
+          <div class="system-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>macOS</h3>
+          <p>Mac Catalyst 运行</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 路线图 -->
+  <section id="roadmap" class="roadmap">
+    <div class="container">
+      <h2 class="section-title">路线图</h2>
+      <p class="section-subtitle">按优先级大致排序，会随反馈与开发进度调整</p>
+      <div class="roadmap-list">
+        <div class="roadmap-item">
+          <span class="roadmap-badge high">高</span>
+          <span>备份 / 恢复</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge high">高</span>
+          <span>更强的自定义界面</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge high">高</span>
+          <span>缓存能力完善</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge mid">中</span>
+          <span>段评书源支持</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge mid">中</span>
+          <span>漫画源</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge mid">中</span>
+          <span>音乐源</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge low">低</span>
+          <span>EPUB 阅读</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge low">低</span>
+          <span>正则替换</span>
+        </div>
+        <div class="roadmap-item">
+          <span class="roadmap-badge low">低</span>
+          <span>iOS 17 以下系统支持</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ / 已知问题 -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <h2 class="section-title">已知问题</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>部分书源无法使用？</summary>
+          <p>受规则复杂度、第三方站点变更与网络环境影响，实际可用性以测试结果为准。解析/兼容层为纯 Swift 实现，部分 JS 函数兼容仍有缺陷，可能导致个别规则解析异常。</p>
+        </details>
+        <details class="faq-item">
+          <summary>"批量测试"功能异常？</summary>
+          <p>"批量测试"功能尚未完善，可能出现卡死或无响应，建议暂时不要使用。</p>
+        </details>
+        <details class="faq-item">
+          <summary>在线 TTS 是否可用？</summary>
+          <p>在线 TTS 功能尚未完善，可能不可用。</p>
+        </details>
+        <details class="faq-item">
+          <summary>支持哪些系统版本？</summary>
+          <p>目前主要在 iOS 26 环境下测试，iOS / iPadOS 17–26 均可运行，但其他版本可能存在兼容性问题。macOS 通过 Mac Catalyst 运行。</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="img/AppIcon.png" alt="栖读" class="footer-icon" />
+          <span>栖读 QiReader</span>
+        </div>
+        <div class="footer-links">
+          <a href="#features">功能</a>
+          <a href="#screenshots">截图</a>
+          <a href="#roadmap">路线图</a>
+          <a href="https://github.com/AREKERT/read" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+      <div class="footer-disclaimer">
+        <p>本应用程序不提供任何内容资源；书籍内容与书源/规则等配置均由使用者自行导入与设置。使用者应自行确认所添加/访问内容及其来源的合法性，并遵守所在地法律法规及第三方网站/服务的使用条款。</p>
+        <p>本应用与任何第三方项目（包括但不限于"Legado/阅读"）不存在任何隶属、授权或合作关系。</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025–2026 栖读. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 回到顶部 -->
+  <a href="#" class="back-to-top" id="backToTop" aria-label="回到顶部">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+  </a>
+
+  <script>
+    // 回到顶部按钮
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 400);
+    });
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // 导航栏滚动效果
+    const navbar = document.querySelector('.navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+
+</body>
+</html>
