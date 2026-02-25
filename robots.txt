@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arekert.github.io/read/sitemap.xml
