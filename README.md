@@ -1,4 +1,4 @@
-# 栖读
+# 栖阅
 
 <img src="img/AppIcon.png" alt="栖读 App Icon" width="96" height="96" />
 
@@ -77,4 +77,3 @@
 ## 参考项目
 
 - Legado（Android 开源阅读）：https://github.com/gedoor/legado （仅用于致谢与技术参考，不代表任何隶属、授权或合作关系）
-
